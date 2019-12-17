@@ -140,8 +140,7 @@ check_version()
         # Because clang-format is not invariant across versions, this
         # is an explicit equivalence check.
         if [[ ${v1[$i]} -ne ${v2[$i]} ]]; then
-            echo "format-code requires clang-format version $1, installed version is $2"
-            exit 1
+            echo "Warning: format-code prefers clang-format version $1, installed version is $2"
         fi
     done
 }
@@ -190,10 +189,10 @@ get_find_args()
     local defaultIncludeExts='h c cpp'
 
     if [[ -z ${userExcludeDirs} ]]; then
-        local excludeDirs=( ${defaultExcludeDirs} )
+        local excludeDirs=( "${defaultExcludeDirs}" )
     else
         log_verbose "Using user directory exclusions: ${userExcludeDirs}"
-        local excludeDirs=( ${userExcludeDirs} )
+        local excludeDirs=( "${userExcludeDirs}" )
     fi
 
     for exc in "${excludeDirs[@]}"
@@ -203,10 +202,10 @@ get_find_args()
 
     if [[ -z ${userIncludeExts} ]]; then
         # not local as this is used in get_file_list() too
-        includeExts=( ${defaultIncludeExts} )
+        includeExts=( "${defaultIncludeExts}" )
     else
         log_verbose "Using user extension inclusions: ${userIncludeExts}"
-        includeExts=( ${userIncludeExts} )
+        includeExts=( "${userIncludeExts}" )
     fi
 
     findargs="${findargs} \("
@@ -250,7 +249,7 @@ get_file_list()
         fi
     else
         log_verbose "Using user files: ${userFiles}"
-        local user_file_list=( ${userFiles} )
+        local user_file_list=( "${userFiles}" )
         file_list=()
         for file in "${user_file_list[@]}"; do
             for ext in "${includeExts[@]}"; do
